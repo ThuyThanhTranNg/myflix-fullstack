@@ -89,19 +89,31 @@ app.post('/api/login', async (req, res) => {
 // 1. Lấy toàn bộ danh sách phim
 app.get('/api/movies', async (req, res) => {
   try {
-    const movieRepository = AppDataSource.getRepository("Movie");
-    const movies = await movieRepository.find();
-    res.json(movies);
+    if (AppDataSource.isInitialized) {
+      const movieRepository = AppDataSource.getRepository("Movie");
+      const movies = await movieRepository.find();
+      if (movies && movies.length > 0) {
+        return res.json(movies);
+      }
+    }
+    const moviesData = require('./seedData');
+    res.json(moviesData);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    const moviesData = require('./seedData');
+    res.json(moviesData);
   }
 });
 
 // 1.5. Lấy chi tiết 1 phim
 app.get('/api/movies/:id', async (req, res) => {
   try {
-    const movieRepository = AppDataSource.getRepository("Movie");
-    const movie = await movieRepository.findOneBy({ id: Number(req.params.id) });
+    if (AppDataSource.isInitialized) {
+      const movieRepository = AppDataSource.getRepository("Movie");
+      const movie = await movieRepository.findOneBy({ id: Number(req.params.id) });
+      if (movie) return res.json(movie);
+    }
+    const moviesData = require('./seedData');
+    const movie = moviesData.find(m => m.id === Number(req.params.id));
     if (!movie) return res.status(404).json({ message: "Không tìm thấy phim" });
     res.json(movie);
   } catch (error) {

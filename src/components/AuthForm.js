@@ -39,10 +39,11 @@ const AuthForm = ({ setLoggedInUser }) => {
   });
 
   const onSubmit = async (data) => {
+    const API_BASE = process.env.REACT_APP_API_URL || "https://myflix-backend-latest.onrender.com/api";
     try {
       if (isLogin) {
         // GỌI API ĐĂNG NHẬP
-        const response = await fetch(`${process.env.REACT_APP_API_URL || "http://localhost:8080/api"}/login`, {
+        const response = await fetch(`${API_BASE}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: data.email, password: data.password }),
@@ -63,7 +64,7 @@ const AuthForm = ({ setLoggedInUser }) => {
         }
       } else {
         // GỌI API ĐĂNG KÝ
-        const response = await fetch(`${process.env.REACT_APP_API_URL || "http://localhost:8080/api"}/register`, {
+        const response = await fetch(`${API_BASE}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),

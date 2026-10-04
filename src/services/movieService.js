@@ -1,4 +1,5 @@
-const API_URL = `${process.env.REACT_APP_API_URL || "http://localhost:8080/api"}/movies`;
+const API_BASE = process.env.REACT_APP_API_URL || "https://myflix-backend-latest.onrender.com/api";
+const API_URL = `${API_BASE}/movies`;
 
 export const getMovies = async () => {
   const res = await fetch(API_URL);
