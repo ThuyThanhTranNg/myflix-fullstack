@@ -16,20 +16,21 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Backend Docker image
-        run: |
-          docker build \
-            -t ${{ secrets.DOCKER_USERNAME }}/myflix-backend:latest \
-            -t ${{ secrets.DOCKER_USERNAME }}/myflix-backend:${{ github.sha }} \
-            ./backend
-
-      - name: Push Backend Docker image
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/myflix-backend:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/myflix-backend:${{ github.sha }}
+      - name: Build and Push Backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/myflix-backend:latest
+            ${{ secrets.DOCKER_USERNAME }}/myflix-backend:${{ github.sha }}

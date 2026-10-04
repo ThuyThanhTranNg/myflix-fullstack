@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getMovie, updateMovie } from "../services/movieService";
+import { getMovie } from "../services/movieService";
 import "./MovieDetail.css";
 
 const MovieDetail = () => {

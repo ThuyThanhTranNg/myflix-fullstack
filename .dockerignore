@@ -1,0 +1,10 @@
+node_modules
+build
+.git
+.github
+.env
+Dockerfile
+docker-compose*.yml
+Jenkinsfile
+README.md
+backend

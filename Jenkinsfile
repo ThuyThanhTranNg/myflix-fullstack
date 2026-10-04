@@ -49,8 +49,13 @@ pipeline {
                         usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
                         export DOCKER_USER
-                        docker compose -f docker-compose.prod.yml pull
-                        docker compose -f docker-compose.prod.yml up -d
+                        if docker compose version >/dev/null 2>&1; then
+                            docker compose -f docker-compose.prod.yml pull
+                            docker compose -f docker-compose.prod.yml up -d
+                        else
+                            docker-compose -f docker-compose.prod.yml pull
+                            docker-compose -f docker-compose.prod.yml up -d
+                        fi
                     '''
                 }
             }
