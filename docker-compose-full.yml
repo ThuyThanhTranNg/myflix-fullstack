@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # 1. Frontend Service (React)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: uda_cloud_frontend
+    ports:
+      - "3000:80" # Nginx phục vụ frontend ở port 3000
+    depends_on:
+      - backend
+    restart: always
+
+  # 2. Backend Service (Node.js/Express)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: uda_cloud_backend
+    ports:
+      - "8080:8080" # Express server ở port 8080
+    environment:
+      - PORT=8080
+      - DB_HOST=mysql_db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=myflix_db
+    depends_on:
+      - mysql_db
+    restart: always
+
+  # 3. Database Service (MySQL)
+  mysql_db:
+    image: mysql:8.0
+    container_name: uda_cloud_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=myflix_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql_data:
