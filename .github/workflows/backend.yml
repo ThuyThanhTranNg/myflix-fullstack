@@ -1,0 +1,35 @@
+name: CI/CD - MyFlix Backend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Backend Docker image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/myflix-backend:latest \
+            -t ${{ secrets.DOCKER_USERNAME }}/myflix-backend:${{ github.sha }} \
+            ./backend
+
+      - name: Push Backend Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/myflix-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/myflix-backend:${{ github.sha }}

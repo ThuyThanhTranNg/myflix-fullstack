@@ -1,9 +1,16 @@
-name: CI/CD - MyFlix Docker
+name: CI/CD - MyFlix Frontend
 
 on:
   push:
     branches:
-      - Thuy
+      - main
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'Dockerfile'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   build:
