@@ -40,7 +40,6 @@ if (process.env.DB_HOST && process.env.DB_HOST !== "localhost") {
           console.warn("⚠️ Không thể kết nối Database Cloud. Hệ thống tự động chuyển sang chế độ Mock Data:", err.message);
       });
 } else {
-  // Thử kết nối local nếu không chạy trên Cloud Render
   AppDataSource.initialize()
       .then(() => {
           console.log("🚀 Kết nối Database Local thành công!");
@@ -50,8 +49,8 @@ if (process.env.DB_HOST && process.env.DB_HOST !== "localhost") {
       });
 }
 
-// ================= API ĐĂNG KÝ =================
-app.post('/api/register', async (req, res) => {
+// ================= API ĐĂNG KÝ (Hỗ trợ cả /api/register và /register) =================
+app.post(['/api/register', '/register'], async (req, res) => {
   try {
     const { firstName, lastName, username, email, password, gender } = req.body;
 
@@ -92,8 +91,8 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// ================= API ĐĂNG NHẬP =================
-app.post('/api/login', async (req, res) => {
+// ================= API ĐĂNG NHẬP (Hỗ trợ cả /api/login và /login) =================
+app.post(['/api/login', '/login'], async (req, res) => {
   try {
     const { email, password } = req.body;
     
@@ -126,8 +125,8 @@ app.post('/api/login', async (req, res) => {
 
 // ================= API QUẢN LÝ PHIM =================
 
-// 1. Lấy toàn bộ danh sách phim
-app.get('/api/movies', async (req, res) => {
+// 1. Lấy toàn bộ danh sách phim (Hỗ trợ cả /api/movies và /movies)
+app.get(['/api/movies', '/movies'], async (req, res) => {
   try {
     if (AppDataSource.isInitialized) {
       const movieRepository = AppDataSource.getRepository("Movie");
@@ -143,14 +142,15 @@ app.get('/api/movies', async (req, res) => {
 });
 
 // 1.5. Lấy chi tiết 1 phim
-app.get('/api/movies/:id', async (req, res) => {
+app.get(['/api/movies/:id', '/movies/:id'], async (req, res) => {
   try {
+    const id = Number(req.params.id);
     if (AppDataSource.isInitialized) {
       const movieRepository = AppDataSource.getRepository("Movie");
-      const movie = await movieRepository.findOneBy({ id: Number(req.params.id) });
+      const movie = await movieRepository.findOneBy({ id });
       if (movie) return res.json(movie);
     }
-    const movie = moviesStore.find(m => m.id === Number(req.params.id));
+    const movie = moviesStore.find(m => m.id === id);
     if (!movie) return res.status(404).json({ message: "Không tìm thấy phim" });
     res.json(movie);
   } catch (error) {
@@ -159,7 +159,7 @@ app.get('/api/movies/:id', async (req, res) => {
 });
 
 // 2. Thêm phim mới
-app.post('/api/movies', async (req, res) => {
+app.post(['/api/movies', '/movies'], async (req, res) => {
   try {
     if (AppDataSource.isInitialized) {
       const movieRepository = AppDataSource.getRepository("Movie");
@@ -176,7 +176,7 @@ app.post('/api/movies', async (req, res) => {
 });
 
 // 3. Sửa phim
-app.put('/api/movies/:id', async (req, res) => {
+app.put(['/api/movies/:id', '/movies/:id'], async (req, res) => {
   try {
     const id = Number(req.params.id);
     if (AppDataSource.isInitialized) {
@@ -198,7 +198,7 @@ app.put('/api/movies/:id', async (req, res) => {
 });
 
 // 4. Xóa phim
-app.delete('/api/movies/:id', async (req, res) => {
+app.delete(['/api/movies/:id', '/movies/:id'], async (req, res) => {
   try {
     const id = Number(req.params.id);
     if (AppDataSource.isInitialized) {
@@ -215,7 +215,7 @@ app.delete('/api/movies/:id', async (req, res) => {
 });
 
 // ================= API SEED DỮ LIỆU =================
-app.get('/api/seed', async (req, res) => {
+app.get(['/api/seed', '/seed'], async (req, res) => {
   try {
     const moviesData = require('./seedData');
     if (AppDataSource.isInitialized) {

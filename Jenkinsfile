@@ -6,7 +6,7 @@ pipeline {
     environment {
         FRONT_IMAGE = 'myflix-frontend'
         BACK_IMAGE  = 'myflix-backend'
-        API_URL     = 'http://localhost:5000'
+        API_URL     = 'http://localhost:5000/api'
     }
 
     stages {
