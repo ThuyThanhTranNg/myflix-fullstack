@@ -1,0 +1,14 @@
+---
+- hosts: dbservers
+  gather_facts: no
+
+  vars:
+    who: World
+
+  tasks:
+    - name: say hello
+      debug:
+        msg: "Hello {{ who }}"
+
+    - name: retrieve the uptime
+      command: uptime

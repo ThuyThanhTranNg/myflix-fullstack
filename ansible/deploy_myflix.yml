@@ -1,0 +1,37 @@
+---
+- name: Deploy MyFlix Application Stack
+  hosts: myflix_app
+  gather_facts: yes
+
+  vars:
+    project_root: ".."
+    compose_file: "../docker-compose.prod.yml"
+
+  tasks:
+    - name: 1. Hien thi thong tin he thong
+      debug:
+        msg: "Dang khoi chay Deploy MyFlix tren may {{ ansible_hostname }} ({{ ansible_distribution }})"
+
+    - name: 2. Kiem tra Docker da duoc cai dat hay chua
+      command: docker --version
+      register: docker_version_output
+
+    - name: Hien thi phien ban Docker
+      debug:
+        msg: "{{ docker_version_output.stdout }}"
+
+    - name: 3. Pull cac Docker Image moi nhat tu Docker Hub (Frontend, Backend, MySQL)
+      command: docker compose -f {{ compose_file }} pull
+      register: pull_output
+
+    - name: 4. Khoi dong cac Container MyFlix
+      command: docker compose -f {{ compose_file }} up -d --remove-orphans
+      register: compose_up_output
+
+    - name: 5. Kiem tra danh sach Container dang hoat dong
+      command: docker ps
+      register: docker_ps_output
+
+    - name: Danh sach cac container MyFlix dang chay
+      debug:
+        msg: "{{ docker_ps_output.stdout_lines }}"
