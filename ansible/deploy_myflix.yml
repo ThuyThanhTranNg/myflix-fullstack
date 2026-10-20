@@ -1,37 +1,38 @@
 ---
-- name: Deploy MyFlix Application Stack
+- name: Deploy MyFlix Application Stack (Frontend, Backend, MongoDB)
   hosts: myflix_app
   gather_facts: yes
 
   vars:
-    project_root: ".."
-    compose_file: "../docker-compose.prod.yml"
+    compose_file: "{{ playbook_dir }}/../docker-compose.prod.yml"
 
   tasks:
-    - name: 1. Hien thi thong tin he thong
+    - name: 1. Hien thi thong tin may chu target
       debug:
-        msg: "Dang khoi chay Deploy MyFlix tren may {{ ansible_hostname }} ({{ ansible_distribution }})"
+        msg: "Dang khoi chay Deploy MyFlix tren may {{ ansible_hostname }} ({{ ansible_distribution }} {{ ansible_distribution_version }})"
 
-    - name: 2. Kiem tra Docker da duoc cai dat hay chua
+    - name: 2. Kiem tra Docker da duoc cai dat
       command: docker --version
       register: docker_version_output
+      changed_when: false
 
     - name: Hien thi phien ban Docker
       debug:
         msg: "{{ docker_version_output.stdout }}"
 
-    - name: 3. Pull cac Docker Image moi nhat tu Docker Hub (Frontend, Backend, MySQL)
+    - name: 3. Pull cac Docker Image moi nhat (Frontend, Backend, MongoDB 7.0)
       command: docker compose -f {{ compose_file }} pull
       register: pull_output
 
-    - name: 4. Khoi dong cac Container MyFlix
+    - name: 4. Khoi dong toan bo cac Container MyFlix Stack
       command: docker compose -f {{ compose_file }} up -d --remove-orphans
       register: compose_up_output
 
     - name: 5. Kiem tra danh sach Container dang hoat dong
-      command: docker ps
+      command: docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
       register: docker_ps_output
+      changed_when: false
 
-    - name: Danh sach cac container MyFlix dang chay
+    - name: Danh sach cac container MyFlix dang hoat dong
       debug:
         msg: "{{ docker_ps_output.stdout_lines }}"

@@ -22,12 +22,22 @@ const MovieListPage = () => {
     fetchMovies();
   }, []);
 
+  const normalizeGenre = (g) => {
+    if (!g) return "";
+    const s = g.trim().toLowerCase();
+    if (["romance", "ngôn tình", "tình cảm", "lãng mạn"].includes(s)) return "romance";
+    if (["action", "hành động"].includes(s)) return "action";
+    if (["sci-fi", "scifi", "khoa học viễn tưởng", "viễn tưởng"].includes(s)) return "sci-fi";
+    if (["animation", "hoạt hình", "anime"].includes(s)) return "animation";
+    return s;
+  };
+
   // Lọc phim mỗi khi genre, searchTerm hoặc dữ liệu phim thay đổi
   useEffect(() => {
     let filteredByGenre = allMovies;
     if (genre) {
       filteredByGenre = allMovies.filter(
-        (movie) => movie.genre.toLowerCase() === genre.toLowerCase()
+        (movie) => normalizeGenre(movie.genre) === normalizeGenre(genre)
       );
     }
 

@@ -100,8 +100,18 @@ const AdminPage = ({ loggedInUser }) => {
     }
   };
 
+  const normalizeGenre = (g) => {
+    if (!g) return "";
+    const s = g.trim().toLowerCase();
+    if (["romance", "ngôn tình", "tình cảm", "lãng mạn"].includes(s)) return "romance";
+    if (["action", "hành động"].includes(s)) return "action";
+    if (["sci-fi", "scifi", "khoa học viễn tưởng", "viễn tưởng"].includes(s)) return "sci-fi";
+    if (["animation", "hoạt hình", "anime"].includes(s)) return "animation";
+    return s;
+  };
+
   const filteredMovies = genre
-    ? movies.filter((movie) => movie.genre.toLowerCase() === genre.toLowerCase())
+    ? movies.filter((movie) => normalizeGenre(movie.genre) === normalizeGenre(genre))
     : movies;
 
   return (
@@ -117,10 +127,17 @@ const AdminPage = ({ loggedInUser }) => {
         />
         <input
           type="text"
-          placeholder="Thể loại"
+          placeholder="Thể loại (romance, action, sci-fi, animation...)"
+          list="genre-options"
           value={newMovie.genre}
           onChange={(e) => setNewMovie({ ...newMovie, genre: e.target.value })}
         />
+        <datalist id="genre-options">
+          <option value="romance">Lãng mạn / Ngôn tình (Romance)</option>
+          <option value="action">Hành động (Action)</option>
+          <option value="sci-fi">Khoa học viễn tưởng (Sci-Fi)</option>
+          <option value="animation">Hoạt hình (Animation)</option>
+        </datalist>
         <textarea
           placeholder="Mô tả"
           value={newMovie.description}

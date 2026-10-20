@@ -39,7 +39,7 @@ const AuthForm = ({ setLoggedInUser }) => {
   });
 
   const onSubmit = async (data) => {
-    const API_BASE = process.env.REACT_APP_API_URL || "https://myflix-backend-latest.onrender.com/api";
+    const API_BASE = process.env.REACT_APP_API_URL || "/api";
     try {
       if (isLogin) {
         // GỌI API ĐĂNG NHẬP

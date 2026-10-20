@@ -2,6 +2,7 @@ services:
   frontend:
     image: tranthuy2312/myflix-frontend:latest
     ports:
+      - "80:80"
       - "3000:80"
     depends_on:
       - backend
@@ -11,24 +12,21 @@ services:
     image: tranthuy2312/myflix-backend:latest
     ports:
       - "5000:8080"
+      - "8080:8080"
     environment:
       - PORT=8080
-      - DB_HOST=mysql_db
-      - DB_USER=root
-      - DB_PASSWORD=root
-      - DB_NAME=myflix_db
+      - MONGO_URI=mongodb://mongo_db:27017/myflix_db
     depends_on:
-      - mysql_db
+      - mongo_db
     restart: always
 
-  mysql_db:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=myflix_db
+  mongo_db:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mongo_data:/data/db
     restart: always
 
 volumes:
-  mysql_data:
+  mongo_data:

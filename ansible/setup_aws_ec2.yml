@@ -1,0 +1,72 @@
+---
+- name: Setup AWS EC2 Ubuntu Server for MyFlix Deployment
+  hosts: myflix_app
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: 1. Update apt package index
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: 2. Install prerequisite packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - git
+          - ufw
+        state: present
+
+    - name: 3. Add Docker official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: 4. Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: 5. Install Docker Engine and Docker Compose plugin
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: 6. Ensure Docker service is running and enabled
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: 7. Add current user to docker group
+      user:
+        name: "{{ ansible_user | default('ubuntu') }}"
+        groups: docker
+        append: yes
+
+    - name: 8. Verify Docker installation
+      command: docker --version
+      register: docker_ver
+      changed_when: false
+
+    - name: 9. Verify Docker Compose installation
+      command: docker compose version
+      register: compose_ver
+      changed_when: false
+
+    - name: Thong bao hoan tat Setup AWS EC2
+      debug:
+        msg:
+          - "Setup AWS EC2 thanh cong!"
+          - "Docker: {{ docker_ver.stdout }}"
+          - "Docker Compose: {{ compose_ver.stdout }}"

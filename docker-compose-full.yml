@@ -8,41 +8,37 @@ services:
       dockerfile: Dockerfile
     container_name: uda_cloud_frontend
     ports:
-      - "3000:80" # Nginx phục vụ frontend ở port 3000
+      - "80:80"
+      - "3000:80" # Nginx phục vụ frontend ở cả port 80 và port 3000
     depends_on:
       - backend
     restart: always
 
-  # 2. Backend Service (Node.js/Express)
+  # 2. Backend Service (Node.js/Express + MongoDB)
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: uda_cloud_backend
     ports:
-      - "8080:8080" # Express server ở port 8080
+      - "5000:8080"
+      - "8080:8080" # Express server ở cả port 8080 và port 5000
     environment:
       - PORT=8080
-      - DB_HOST=mysql_db
-      - DB_USER=root
-      - DB_PASSWORD=root
-      - DB_NAME=myflix_db
+      - MONGO_URI=mongodb://mongo_db:27017/myflix_db
     depends_on:
-      - mysql_db
+      - mongo_db
     restart: always
 
-  # 3. Database Service (MySQL)
-  mysql_db:
-    image: mysql:8.0
-    container_name: uda_cloud_mysql
+  # 3. Database Service (MongoDB)
+  mongo_db:
+    image: mongo:7.0
+    container_name: uda_cloud_mongo
     ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=myflix_db
+      - "27017:27017"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mongo_data:/data/db
     restart: always
 
 volumes:
-  mysql_data:
+  mongo_data:
