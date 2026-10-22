@@ -137,41 +137,45 @@ async function autoSeed() {
       console.log("👤 Đã khởi tạo tài khoản Admin mặc định: admin123@gmail.com / admin123");
     }
 
-    const userCount = await User.countDocuments();
-    if (userCount <= 1) {
-      await User.insertMany([
-        {
-          id: 2,
-          firstName: 'Tuấn',
-          lastName: 'Nguyễn',
-          username: 'tuannguyen',
-          email: 'tuan.nguyen@example.com',
-          password: 'password123',
-          gender: 'Male',
-          isAdmin: false,
-        },
-        {
-          id: 3,
-          firstName: 'Linh',
-          lastName: 'Trần',
-          username: 'linhtran',
-          email: 'linh.tran@example.com',
-          password: 'password123',
-          gender: 'Female',
-          isAdmin: false,
-        },
-        {
-          id: 4,
-          firstName: 'Minh',
-          lastName: 'Hoàng',
-          username: 'minhhoang',
-          email: 'minh.hoang@example.com',
-          password: 'password123',
-          gender: 'Male',
-          isAdmin: false,
-        },
-      ]);
-      console.log("👥 Đã nạp thêm dữ liệu người dùng mẫu!");
+    // Đồng bộ các user thành viên viết bình luận mẫu (nếu chưa có)
+    const memberUsers = [
+      {
+        id: 3,
+        firstName: 'Hoàng',
+        lastName: 'Long',
+        username: 'hoanglong',
+        email: 'hoanglong@gmail.com',
+        password: 'password123',
+        gender: 'Male',
+        isAdmin: false,
+      },
+      {
+        id: 4,
+        firstName: 'Thu',
+        lastName: 'Thảo',
+        username: 'thuthao',
+        email: 'thuthao99@gmail.com',
+        password: 'password123',
+        gender: 'Female',
+        isAdmin: false,
+      },
+      {
+        id: 5,
+        firstName: 'Đức',
+        lastName: 'Anh',
+        username: 'ducanh',
+        email: 'ducanh.dev@gmail.com',
+        password: 'password123',
+        gender: 'Male',
+        isAdmin: false,
+      },
+    ];
+
+    for (const mu of memberUsers) {
+      const uExists = await User.findOne({ email: mu.email });
+      if (!uExists) {
+        await User.create(mu);
+      }
     }
 
     const commentCount = await Comment.countDocuments();
