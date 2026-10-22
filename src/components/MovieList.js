@@ -1,33 +1,36 @@
 import React from "react";
 import MovieCard from "./MovieCard";
 
-const MovieList = ({ movies, onEdit, onDelete, isAdmin }) => {
+const MovieList = ({ movies = [], onEdit, onDelete, isAdmin }) => {
   return (
-    <div className="movie-grid">
+    <div className="netflix-movie-grid">
       {movies.length === 0 ? (
-        <p>No movies available.</p>
+        <div className="no-movies-box">
+          <p>Không có phim nào để hiển thị.</p>
+        </div>
       ) : (
         movies.map((movie) => (
-          <div key={movie.id} className="movie-item">
-            <MovieCard movie={movie} />
-            {/* Chỉ hiển thị nút Edit và Delete nếu là Admin */}
-            {isAdmin && (
+          isAdmin ? (
+            <div key={movie.id || movie._id} className="movie-item-admin">
+              <MovieCard movie={movie} />
               <div className="admin-controls">
                 <button
                   className="edit-btn"
-                  onClick={() => onEdit(movie)}
+                  onClick={() => onEdit && onEdit(movie)}
                 >
                   Edit
                 </button>
                 <button
                   className="delete-btn"
-                  onClick={() => onDelete(movie.id)}
+                  onClick={() => onDelete && onDelete(movie.id || movie._id)}
                 >
                   Delete
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <MovieCard key={movie.id || movie._id} movie={movie} />
+          )
         ))
       )}
     </div>

@@ -1,0 +1,343 @@
+/* ==============================================================================
+   MOVIE LIST PAGE - NETFLIX STREAMING EXPERIENCE
+============================================================================== */
+
+.movie-list-page {
+  min-height: 100vh;
+  background: #090a0f;
+  color: #e5e7eb;
+  padding-bottom: 60px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ================= HERO SPOTLIGHT BANNER ================= */
+.hero-spotlight {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center 30%;
+  margin-bottom: 30px;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(to right, #090a0f 25%, rgba(9, 10, 15, 0.75) 60%, transparent 100%),
+    linear-gradient(to top, #090a0f 0%, rgba(9, 10, 15, 0.3) 30%, transparent 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .hero-spotlight {
+    height: 380px;
+  }
+  .hero-overlay {
+    padding: 0 20px;
+    background: linear-gradient(to top, #090a0f 15%, rgba(9, 10, 15, 0.85) 60%, rgba(9, 10, 15, 0.5) 100%);
+  }
+}
+
+.hero-content {
+  max-width: 600px;
+  z-index: 2;
+  animation: heroFadeIn 0.5s ease;
+}
+
+.hero-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.hero-tag {
+  background: #e50914;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 10px rgba(229, 9, 20, 0.4);
+}
+
+.hero-genre {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  color: #f3f4f6;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  line-height: 1.15;
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.5px;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 28px;
+  }
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13.5px;
+  color: #d1d5db;
+  margin-bottom: 14px;
+}
+
+.hero-views {
+  color: #10b981;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #9ca3af;
+  margin-bottom: 22px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #e50914;
+  color: #ffffff;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(229, 9, 20, 0.45);
+}
+
+.btn-hero-watch:hover {
+  background: #b80710;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(229, 9, 20, 0.6);
+}
+
+.btn-hero-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-hero-detail:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+/* ================= FILTER & SEARCH TOOLBAR ================= */
+.movies-main-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 36px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .movies-main-container {
+    padding: 0 16px;
+  }
+}
+
+.filter-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Category Chips */
+.category-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d1d5db;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.chip-btn.active {
+  background: #e50914;
+  color: #ffffff;
+  border-color: #e50914;
+  box-shadow: 0 2px 10px rgba(229, 9, 20, 0.35);
+  font-weight: 600;
+}
+
+/* Search & Sort Controls */
+.search-sort-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.movie-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #151622;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 16px;
+  width: 260px;
+  transition: all 0.2s ease;
+}
+
+.movie-search-box:focus-within {
+  border-color: #e50914;
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
+  background: #1a1b2a;
+}
+
+.movie-search-box input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13.5px;
+  width: 100%;
+  outline: none;
+}
+
+.sort-select {
+  background: #151622;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d1d5db;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13.5px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Section Header */
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.movies-count-badge {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ================= MOVIE POSTER GRID ================= */
+.netflix-movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 22px;
+}
+
+@media (max-width: 540px) {
+  .netflix-movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+/* No movies found */
+.no-movies-box {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: #141520;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  color: #9ca3af;
+  font-size: 15px;
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

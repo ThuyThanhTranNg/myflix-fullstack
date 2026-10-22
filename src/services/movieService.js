@@ -1,22 +1,23 @@
-const API_BASE = process.env.REACT_APP_API_URL || "/api";
-const API_URL = `${API_BASE}/movies`;
+import { getApiBase } from "./apiConfig";
+
+const getMoviesUrl = () => `${getApiBase()}/movies`;
 
 export const getMovies = async () => {
-  const res = await fetch(API_URL);
+  const res = await fetch(getMoviesUrl());
   return await res.json();
 };
 
 export const getMovie = async (id) => {
-  const res = await fetch(`${API_URL}/${id}`);
+  const res = await fetch(`${getMoviesUrl()}/${id}`);
   return await res.json();
 };
 
 export const deleteMovie = async (id) => {
-  await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+  await fetch(`${getMoviesUrl()}/${id}`, { method: 'DELETE' });
 };
 
 export const updateMovie = async (movie) => {
-  const res = await fetch(`${API_URL}/${movie.id}`, {
+  const res = await fetch(`${getMoviesUrl()}/${movie.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie)
@@ -25,7 +26,7 @@ export const updateMovie = async (movie) => {
 };
 
 export const addMovie = async (movie) => {
-  const res = await fetch(API_URL, {
+  const res = await fetch(getMoviesUrl(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(movie)

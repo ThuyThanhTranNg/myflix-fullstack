@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
   {
+    id: {
+      type: Number,
+      index: true,
+    },
     firstName: {
       type: String,
       trim: true,
@@ -44,7 +48,9 @@ const userSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform: (doc, ret) => {
-        ret.id = ret._id.toString();
+        if (!ret.id && ret._id) {
+          ret.id = ret._id.toString();
+        }
         delete ret.__v;
         return ret;
       },
@@ -52,12 +58,29 @@ const userSchema = new mongoose.Schema(
     toObject: {
       virtuals: true,
       transform: (doc, ret) => {
-        ret.id = ret._id.toString();
+        if (!ret.id && ret._id) {
+          ret.id = ret._id.toString();
+        }
         delete ret.__v;
         return ret;
       },
     },
   }
 );
+
+userSchema.statics.findByAnyId = function (paramId) {
+  const queryOr = [];
+  const numId = Number(paramId);
+  if (!isNaN(numId)) {
+    queryOr.push({ id: numId });
+  }
+  if (mongoose.isValidObjectId(paramId)) {
+    queryOr.push({ _id: paramId });
+  }
+  if (queryOr.length === 0) {
+    return this.findOne({ _id: null });
+  }
+  return this.findOne({ $or: queryOr });
+};
 
 module.exports = mongoose.model('User', userSchema);
