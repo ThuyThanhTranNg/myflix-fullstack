@@ -26,8 +26,7 @@ const AppContent = ({ loggedInUser, setLoggedInUser }) => {
         <Navbar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
       )}
       <Routes>
-        <Route path="/" element={<MovieListPage />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/imageSlider" element={<ImageSlider />} />
         <Route
           path="/authform"
