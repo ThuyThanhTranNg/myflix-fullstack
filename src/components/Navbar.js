@@ -21,8 +21,10 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Hiển thị nút Admin Portal nếu là Admin hoặc đang ở chế độ khách trải nghiệm
-  const showAdminPortal = !loggedInUser || loggedInUser.isAdmin;
+  // Chỉ hiển thị nút Admin Portal khi người dùng ĐÃ ĐĂNG NHẬP vào hệ thống (và có quyền Admin)
+  const showAdminPortal = Boolean(
+    loggedInUser && (loggedInUser.isAdmin || loggedInUser.role === "admin")
+  );
 
   return (
     <nav className="navbar">

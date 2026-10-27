@@ -193,6 +193,8 @@ const MovieListPage = () => {
               </div>
             </div>
           </div>
+          {/* Lớp hòa tan mềm mại cạnh dưới vào nền trang (Seamless Bottom Fade) */}
+          <div className="hero-bottom-fade" />
         </section>
       )}
 
