@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../assets/styles.css'; // Import CSS file
 
 const ImageSlider = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [
     './images/marvel.jpg',
@@ -10,11 +12,11 @@ const ImageSlider = () => {
     './images/marvel1.jpg',
   ];
 
-  // Tự động chuyển slide mỗi 3 giây
+  // Tự động chuyển slide mỗi 7 giây
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length); // Lướt qua ảnh
-    }, 7000); // Mỗi 3 giây lướt qua ảnh
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [images.length]);
@@ -38,7 +40,15 @@ const ImageSlider = () => {
         }}
       >
         {images.map((image, index) => (
-          <img key={index} src={image} alt={`Slide ${index}`} className="slide" />
+          <img
+            key={index}
+            src={image}
+            alt={`Slide ${index}`}
+            className="slide"
+            onClick={() => navigate('/movies')}
+            style={{ cursor: 'pointer' }}
+            title="Bấm để xem danh sách phim"
+          />
         ))}
       </div>
       <button className="slider-button prev" onClick={prevSlide}>

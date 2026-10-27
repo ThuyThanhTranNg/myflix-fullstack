@@ -29,19 +29,10 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Brand Logo & Link Kho Phim bên trái */}
-        <div className="navbar-brand-group">
-          <Link to="/" className="brand-name" title="Trang chủ MyFlix">
-            MyFlix
-          </Link>
-          <Link
-            to="/movies"
-            className={`nav-movies-link ${isActive("/movies") ? "active" : ""}`}
-            title="Khám phá toàn bộ phim"
-          >
-            Kho Phim
-          </Link>
-        </div>
+        {/* Brand Logo bên trái */}
+        <Link to="/" className="brand-name" title="Trang chủ MyFlix">
+          MyFlix
+        </Link>
 
         {/* Khu vực bên phải: Chỉ giữ lại Admin Portal + Thông tin tài khoản / Đăng nhập */}
         <div className="navbar-right">
