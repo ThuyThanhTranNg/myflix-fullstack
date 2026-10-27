@@ -441,6 +441,38 @@ input.is-invalid {
   right: 10px;
 }
 
+/* Nút Khám phá kho phim trên Slider */
+.slider-cta-overlay {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.slider-explore-btn {
+  background: #e50914;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(229, 9, 20, 0.6);
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+}
+
+.slider-explore-btn:hover {
+  background: #b80710;
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(229, 9, 20, 0.8);
+}
+
 
 /*iframe*/
 iframe {

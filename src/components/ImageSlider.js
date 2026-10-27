@@ -57,6 +57,17 @@ const ImageSlider = () => {
       <button className="slider-button next" onClick={nextSlide}>
         &#10095;
       </button>
+
+      {/* Nút bấm nổi bật để chuyển sang trang danh sách phim */}
+      <div className="slider-cta-overlay">
+        <button
+          className="slider-explore-btn"
+          onClick={() => navigate('/movies')}
+          title="Xem kho phim"
+        >
+          ▶ Xem Danh Sách Phim
+        </button>
+      </div>
     </div>
   );
 };

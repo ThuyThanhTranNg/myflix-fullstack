@@ -374,7 +374,7 @@ const AdminPage = ({ loggedInUser, setLoggedInUser }) => {
       {/* FULLSCREEN ADMIN TOPBAR */}
       <header className="admin-topbar">
         <div className="admin-topbar-left">
-          <Link to="/" className="admin-brand" title="Về trang chủ MyFlix">
+          <Link to="/movies" className="admin-brand" title="Về website xem phim MyFlix">
             <span className="admin-brand-logo">MyFlix</span>
             <span className="admin-badge-tag">ADMIN PORTAL</span>
           </Link>
@@ -417,7 +417,7 @@ const AdminPage = ({ loggedInUser, setLoggedInUser }) => {
 
         {/* RIGHT ACTIONS: VIEW WEBSITE & LOGOUT */}
         <div className="admin-topbar-right">
-          <Link to="/" className="btn-view-site" title="Xem giao diện người xem phim">
+          <Link to="/movies" className="btn-view-site" title="Xem giao diện người xem phim">
             <FaExternalLinkAlt /> Xem Website
           </Link>
           <button className="btn-logout" onClick={handleLogout} title="Đăng xuất khỏi quyền Admin">

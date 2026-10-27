@@ -30,7 +30,11 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
     <nav className="navbar">
       <div className="navbar-container">
         {/* Brand Logo bên trái */}
-        <Link to="/" className="brand-name" title="Trang chủ MyFlix">
+        <Link
+          to={loggedInUser ? "/movies" : "/"}
+          className="brand-name"
+          title={loggedInUser ? "Xem danh sách phim" : "Trang chủ MyFlix"}
+        >
           MyFlix
         </Link>
 

@@ -94,7 +94,7 @@ const AuthForm = ({ setLoggedInUser }) => {
           if (result.user.isAdmin) {
             navigate("/admin");
           } else {
-            navigate("/");
+            navigate("/movies");
           }
         }, 800);
       } else {
