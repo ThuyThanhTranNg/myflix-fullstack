@@ -14,12 +14,15 @@
 .hero-spotlight {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: 500px;
   display: flex;
   align-items: center;
   background-size: cover;
-  background-position: center 30%;
+  background-position: center 25%;
+  background-repeat: no-repeat;
   margin-bottom: 30px;
+  image-rendering: -webkit-optimize-contrast;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .hero-overlay {
@@ -29,8 +32,8 @@
   right: 0;
   bottom: 0;
   background: 
-    linear-gradient(to right, #090a0f 25%, rgba(9, 10, 15, 0.75) 60%, transparent 100%),
-    linear-gradient(to top, #090a0f 0%, rgba(9, 10, 15, 0.3) 30%, transparent 100%);
+    linear-gradient(to right, #090a0f 20%, rgba(9, 10, 15, 0.65) 50%, rgba(9, 10, 15, 0.1) 85%, transparent 100%),
+    linear-gradient(to top, #090a0f 0%, rgba(9, 10, 15, 0.2) 25%, transparent 70%);
   display: flex;
   align-items: center;
   padding: 0 50px;

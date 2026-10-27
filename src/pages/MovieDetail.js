@@ -14,7 +14,7 @@ import {
   FaComments,
   FaPaperPlane,
 } from "react-icons/fa";
-import { getMovie, getMovies } from "../services/movieService";
+import { getMovie, getMovies, getMovieBackdrop } from "../services/movieService";
 import { getComments, createComment } from "../services/commentService";
 import MovieCard from "../components/MovieCard";
 import "./MovieDetail.css";
@@ -260,7 +260,7 @@ const MovieDetail = () => {
       <section
         className="detail-hero-section"
         style={{
-          backgroundImage: `url(${movie.image || "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600"})`,
+          backgroundImage: `url(${getMovieBackdrop(movie)})`,
         }}
       >
         <div className="detail-hero-backdrop-overlay"></div>

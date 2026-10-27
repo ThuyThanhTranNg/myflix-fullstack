@@ -10,7 +10,7 @@ import {
   FaFilm,
 } from "react-icons/fa";
 import MovieList from "../components/MovieList";
-import { getMovies } from "../services/movieService";
+import { getMovies, getMovieBackdrop } from "../services/movieService";
 import "./MovieListPage.css";
 
 const CATEGORIES = [
@@ -147,7 +147,7 @@ const MovieListPage = () => {
         <section
           className="hero-spotlight"
           style={{
-            backgroundImage: `url(${heroMovie.image || "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600"})`,
+            backgroundImage: `url(${getMovieBackdrop(heroMovie)})`,
           }}
         >
           <div className="hero-overlay">

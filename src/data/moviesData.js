@@ -39,6 +39,7 @@ const moviesData = [
     releaseDate: "2024",
     description: "Venom là một nhân vật hư cấu xuất hiện trong sách truyện tranh Mỹ, được phát hành bởi Marvel Comics, và thường kết hợp với người Nhện. Nhân vật này là một Symbiote ngoài hành tinh có hình dạng vô định, giống như chất lỏng, sống sót bằng cách cộng sinh với vật chủ, thường là con người. Dạng sống cộng sinh này sẽ giúp vật chủ nâng cao sức mạnh và thường được gọi là Venom",
     image: "/images/actions/venom4.jpg",
+    backdrop: "/images/backdrops/venom-backdrop.jpg",
     videoUrl: "https://www.youtube.com/embed/23xDSXx3WV8?si=iBAMf1hNMBESlA47",
     subtitleUrl: "/subtitles/sub4.vtt",
     views: 1200,

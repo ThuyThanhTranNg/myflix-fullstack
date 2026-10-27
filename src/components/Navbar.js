@@ -21,75 +21,56 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
 
   const isActive = (path) => location.pathname === path;
 
+  // Hiển thị nút Admin Portal nếu là Admin hoặc đang ở chế độ khách trải nghiệm
+  const showAdminPortal = !loggedInUser || loggedInUser.isAdmin;
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Brand Logo on Left */}
-        <Link to="/" className="brand-name">
+        {/* Brand Logo bên trái */}
+        <Link to="/movies" className="brand-name">
           MyFlix
         </Link>
 
-        {/* Genre Links Centered */}
-        <div className="navbar-links">
-          {loggedInUser?.isAdmin ? (
-            <>
-              <Link to="/admin" className={isActive("/admin") ? "active" : ""}>
-                <FaUserShield style={{ marginRight: 4 }} /> Admin Portal
-              </Link>
-              <Link to="/movies" className={isActive("/movies") ? "active" : ""}>
-                Movies
-              </Link>
-              <Link to="/movies/action" className={isActive("/movies/action") ? "active" : ""}>
-                Action
-              </Link>
-              <Link to="/movies/sci-fi" className={isActive("/movies/sci-fi") ? "active" : ""}>
-                Sci-Fi
-              </Link>
-              <Link to="/movies/animation" className={isActive("/movies/animation") ? "active" : ""}>
-                Animation
-              </Link>
-              <Link to="/movies/romance" className={isActive("/movies/romance") ? "active" : ""}>
-                Romance
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/movies" className={isActive("/movies") ? "active" : ""}>
-                Tất cả phim
-              </Link>
-              <Link to="/movies/action" className={isActive("/movies/action") ? "active" : ""}>
-                Hành động
-              </Link>
-              <Link to="/movies/sci-fi" className={isActive("/movies/sci-fi") ? "active" : ""}>
-                Viễn tưởng
-              </Link>
-              <Link to="/movies/animation" className={isActive("/movies/animation") ? "active" : ""}>
-                Hoạt hình
-              </Link>
-              <Link to="/movies/romance" className={isActive("/movies/romance") ? "active" : ""}>
-                Lãng mạn
-              </Link>
-            </>
+        {/* Khu vực bên phải: Chỉ giữ lại Admin Portal + Thông tin tài khoản / Đăng nhập */}
+        <div className="navbar-right">
+          {showAdminPortal && (
+            <Link
+              to="/admin"
+              className={`admin-portal-btn ${isActive("/admin") ? "active" : ""}`}
+              title="Trang quản trị hệ thống"
+            >
+              <FaUserShield className="admin-btn-icon" />
+              <span>Admin Portal</span>
+            </Link>
           )}
-        </div>
 
-        {/* User Info or Sign Up Button */}
-        <div className="navbar-user">
           {loggedInUser ? (
-            <>
+            <div className="navbar-auth-group">
               <div className="user-info-pill">
                 <div className="user-avatar-circle">
                   {(loggedInUser.username || "U")[0].toUpperCase()}
                 </div>
-                <span>{loggedInUser.username || "Thành viên"}</span>
+                <span className="user-name-text">
+                  {loggedInUser.username || "Thành viên"}
+                </span>
               </div>
-              <button className="logout-btn" onClick={handleLogout} title="Đăng xuất">
-                <FaSignOutAlt /> Đăng xuất
+              <button
+                className="logout-btn"
+                onClick={handleLogout}
+                title="Đăng xuất"
+              >
+                <FaSignOutAlt />
+                <span>Đăng xuất</span>
               </button>
-            </>
+            </div>
           ) : (
-            <button className="signup-link" onClick={handleSignUpClick}>
-              Đăng nhập / Đăng ký
+            <button
+              className="signup-link"
+              onClick={handleSignUpClick}
+              title="Đăng nhập / Đăng ký"
+            >
+              <span>Đăng nhập / Đăng ký</span>
             </button>
           )}
         </div>
