@@ -42,3 +42,14 @@ jobs:
             tranthuy2312/myflix-frontend:${{ github.sha }}
             tranthuy2312/myflix:latest
             tranthuy2312/myflix:${{ github.sha }}
+
+      - name: Deploy to AWS EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/myflix
+            sudo docker compose -f docker-compose.prod.yml pull
+            sudo docker compose -f docker-compose.prod.yml up -d --remove-orphans
